@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/117/trunk/box2dLight/src/shaders
+END
+WithoutShadowShader.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/116/trunk/box2dLight/src/shaders/WithoutShadowShader.java
+END
+Gaussian.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/117/trunk/box2dLight/src/shaders/Gaussian.java
+END
+ShadowShader.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/116/trunk/box2dLight/src/shaders/ShadowShader.java
+END
+DiffuseShader.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/117/trunk/box2dLight/src/shaders/DiffuseShader.java
+END
+LightShader.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/116/trunk/box2dLight/src/shaders/LightShader.java
+END
