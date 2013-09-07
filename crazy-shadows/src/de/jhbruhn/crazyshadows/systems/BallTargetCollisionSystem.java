@@ -6,10 +6,8 @@ import java.util.List;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -18,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import de.jhbruhn.crazyshadows.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Ball;
 import de.jhbruhn.crazyshadows.components.Target;
+import de.jhbruhn.crazyshadows.components.Velocity;
 
 public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 		ContactListener {
@@ -28,13 +27,15 @@ public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 	ComponentMapper<Ball> bm;
 	@Mapper
 	ComponentMapper<Target> tm;
+	@Mapper
+	ComponentMapper<Velocity> vm;
 
 	private List<Integer> currentCollisions = new ArrayList<Integer>();
 
 	@SuppressWarnings("unchecked")
 	public BallTargetCollisionSystem() {
-		super(Aspect.getAspectForAll(PhysicsBody.class).one(Ball.class,
-				Target.class));
+		super(Aspect.getAspectForAll(PhysicsBody.class, Velocity.class).one(
+				Ball.class, Target.class));
 	}
 
 	@Override
@@ -102,8 +103,7 @@ public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 	}
 
 	@Override
-	protected void process(Entity arg0) {
-		// TODO Auto-generated method stub
+	protected void process(Entity e) {
 
 	}
 

@@ -82,7 +82,7 @@ public class EntityFactory {
 
 	public static Entity createBallEntitiy(World world,
 			com.badlogic.gdx.physics.box2d.World physicsWorld, float x,
-			float y, int id) {
+			float y, int id, Color color) {
 		Entity e = world.createEntity();
 
 		Position position = new Position();
@@ -122,8 +122,8 @@ public class EntityFactory {
 		e.addComponent(physicsBody);
 
 		Light light = new Light();
-		light.rays = 64;
-		light.color = new Color(0, 1, 0, 1f);
+		light.rays = 128;
+		light.color = color;
 		light.distance = 64;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
@@ -136,7 +136,7 @@ public class EntityFactory {
 
 	public static Entity createTargetEntity(World world,
 			com.badlogic.gdx.physics.box2d.World physicsWorld, float x,
-			float y, float width, float height, int id) {
+			float y, float width, float height, int id, Color color) {
 		Entity e = world.createEntity();
 
 		Target target = new Target();
@@ -175,8 +175,8 @@ public class EntityFactory {
 		e.addComponent(pBody);
 
 		Light light = new Light();
-		light.rays = 128;
-		light.color = new Color(0, 1, 0, 1f);
+		light.rays = 256;
+		light.color = color;
 		light.distance = 128f;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);

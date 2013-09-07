@@ -5,6 +5,7 @@ import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -63,17 +64,28 @@ public class GameScreen implements Screen {
 
 		world.initialize();
 
-		EntityFactory.createPlayerEntity(world, physicsWorld, 0, 0)
+		EntityFactory.createPlayerEntity(world, physicsWorld, 50, -300)
 				.addToWorld();
 
-		for (int i = 0; i < 200; i++) {
-			EntityFactory.createBallEntitiy(world, physicsWorld,
-					(float) (Math.random() - 0.5) * 2000,
-					(float) (Math.random() - 0.5) * 2000, i).addToWorld();
-		}
+		// for (int i = 0; i < 200; i++) {
+		// EntityFactory.createBallEntitiy(world, physicsWorld,
+		// (float) (Math.random() - 0.5) * 2000,
+		// (float) (Math.random() - 0.5) * 2000, i).addToWorld();
+		// }
 
-		EntityFactory.createTargetEntity(world, physicsWorld, 50, 100, 50, 50,
-				1).addToWorld();
+		EntityFactory.createBallEntitiy(world, physicsWorld, 50, -255, 1,
+				new Color(0, 1, 0, 1)).addToWorld();
+
+		EntityFactory.createTargetEntity(world, physicsWorld, 25, 100, 50, 50,
+				1, new Color(0, 1, 0, 1)).addToWorld();
+
+		EntityFactory
+				.createWallEntity(world, physicsWorld, 100, -350, 100, 500);
+		EntityFactory
+				.createWallEntity(world, physicsWorld, -100, -350, 500, 10);
+
+		EntityFactory.createWallEntity(world, physicsWorld, -100, -350, 100,
+				500);
 	}
 
 	@Override
