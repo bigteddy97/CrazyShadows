@@ -8,6 +8,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 
 import de.jhbruhn.crazyshadows.systems.BallTargetCollisionSystem;
@@ -64,28 +68,57 @@ public class GameScreen implements Screen {
 
 		world.initialize();
 
-		EntityFactory.createPlayerEntity(world, physicsWorld, 50, -300)
-				.addToWorld();
+		loadMap("level_1");
 
-		// for (int i = 0; i < 200; i++) {
-		// EntityFactory.createBallEntitiy(world, physicsWorld,
-		// (float) (Math.random() - 0.5) * 2000,
-		// (float) (Math.random() - 0.5) * 2000, i).addToWorld();
-		// }
+	}
 
-		EntityFactory.createBallEntitiy(world, physicsWorld, 50, -255, 1,
-				new Color(0, 1, 0, 1)).addToWorld();
+	private void loadMap(String mapName) {
+		TiledMap map = TiledLoader.createMap(Gdx.files.internal("maps/"
+				+ mapName + ".tmx"));
+		for (TiledObjectGroup g : map.objectGroups) {
 
-		EntityFactory.createTargetEntity(world, physicsWorld, 25, 100, 50, 50,
-				1, new Color(0, 1, 0, 1)).addToWorld();
+			// Important: we need to inverse the y-coordinates here because
+			// tmx's system is different from libgdxs
+			if (g.name.equals("walls")) {
+				for (TiledObject o : g.objects) {
+					EntityFactory.createWallEntity(world, physicsWorld, o.x,
+							-o.y - o.height, o.width, o.height).addToWorld();
+				}
+			} else if (g.name.equals("player")) {
+				for (TiledObject o : g.objects) {
+					EntityFactory.createPlayerEntity(world, physicsWorld, o.x,
+							-o.y).addToWorld();
+				}
+			} else if (g.name.equals("balls")) {
+				for (TiledObject o : g.objects) {
+					int id = Integer.valueOf(o.name);
+					Color color = getColorForId(id);
+					EntityFactory.createBallEntitiy(world, physicsWorld, o.x,
+							-o.y, id, color).addToWorld();
+				}
+			} else if (g.name.equals("targets")) {
+				for (TiledObject o : g.objects) {
+					int id = Integer.valueOf(o.name);
+					Color color = getColorForId(id);
+					EntityFactory.createTargetEntity(world, physicsWorld, o.x,
+							-o.y - o.height, o.width, o.height, id, color)
+							.addToWorld();
+				}
+			}
+		}
+	}
 
-		EntityFactory
-				.createWallEntity(world, physicsWorld, 100, -350, 100, 500);
-		EntityFactory
-				.createWallEntity(world, physicsWorld, -100, -350, 500, 10);
+	private Color getColorForId(int id) {
+		switch (id) {
+		case 1:
+			return new Color(0, 1, 0, 1);
+		case 2:
+			return new Color(1, 0, 0, 1);
+		case 3:
+			return new Color(0, 0, 1, 1);
 
-		EntityFactory.createWallEntity(world, physicsWorld, -100, -350, 100,
-				500);
+		}
+		return new Color(0, 1, 0, 1);
 	}
 
 	@Override
