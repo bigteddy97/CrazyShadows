@@ -196,7 +196,7 @@ public class EntityFactory {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width / 2, height / 2);
 		FixtureDef fDef = new FixtureDef();
-		fDef.restitution = 0.9f;
+		fDef.restitution = 0f;
 		fDef.friction = 1.01f;
 		fDef.shape = shape;
 		fDef.density = 1f;

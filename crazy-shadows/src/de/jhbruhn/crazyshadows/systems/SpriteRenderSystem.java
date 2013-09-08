@@ -51,7 +51,7 @@ public class SpriteRenderSystem extends EntitySystem {
 	protected void initialize() {
 		regions = new HashMap<String, AtlasRegion>();
 		textureAtlas = new TextureAtlas(
-				Gdx.files.internal("textures/pack.atlas"));
+				Gdx.files.internal("textures-packed/pack.atlas"));
 		for (AtlasRegion r : textureAtlas.getRegions()) {
 			regions.put(r.name, r);
 		}

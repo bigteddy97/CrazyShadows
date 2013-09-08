@@ -9,6 +9,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import de.jhbruhn.crazyshadows.components.Ball;
 import de.jhbruhn.crazyshadows.components.Circle;
 import de.jhbruhn.crazyshadows.components.Light;
+import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Rectangle;
 import de.jhbruhn.crazyshadows.components.Sprite;
 import de.jhbruhn.crazyshadows.components.Target;
@@ -27,10 +28,13 @@ public class BallTargetHideSystem extends EntityProcessingSystem {
 	ComponentMapper<Rectangle> rm;
 	@Mapper
 	ComponentMapper<Circle> cm;
+	@Mapper
+	ComponentMapper<PhysicsBody> pbm;
 
 	@SuppressWarnings("unchecked")
 	public BallTargetHideSystem() {
-		super(Aspect.getAspectForAll(Light.class).one(Ball.class, Target.class)
+		super(Aspect.getAspectForAll(Light.class, PhysicsBody.class)
+				.one(Ball.class, Target.class)
 				.one(Sprite.class, Rectangle.class, Circle.class));
 	}
 
@@ -47,8 +51,11 @@ public class BallTargetHideSystem extends EntityProcessingSystem {
 		if (!hide)
 			return;
 		boolean remove = false;
+
 		Light l = lm.get(e);
+
 		l.color.a -= world.delta;
+
 		if (sm.has(e)) {
 			Sprite s = sm.get(e);
 			s.a -= this.world.delta;
