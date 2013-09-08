@@ -12,6 +12,7 @@ public class MainActivity extends AndroidApplication {
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = false;
+//		cfg.useWakelock = true;
 		// cfg.numSamples = 4;
 		initialize(new CrazyShadows(), cfg);
 	}

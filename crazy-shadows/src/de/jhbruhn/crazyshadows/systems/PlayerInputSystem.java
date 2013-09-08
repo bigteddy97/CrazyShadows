@@ -106,37 +106,9 @@ public class PlayerInputSystem extends EntityProcessingSystem implements
 		return false;
 	}
 
-	private void updateAccelerometer() {
-		float x = Gdx.input.getAccelerometerX();
-		float y = Gdx.input.getAccelerometerY();
-
-		if (x > 1f) {
-			down = true;
-			up = false;
-		} else if (x < -1f) {
-			up = true;
-			down = false;
-		} else {
-			up = false;
-			down = false;
-		}
-		if (y > 1f) {
-			right = true;
-			left = false;
-		} else if (y < -1f) {
-			right = false;
-			left = true;
-		} else {
-			left = false;
-			right = false;
-		}
-
-	}
-
 	@Override
 	protected void process(Entity e) {
-		if (Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer))
-			updateAccelerometer();
+
 		Position position = pm.get(e);
 		Velocity velocity = vm.get(e);
 
@@ -145,6 +117,13 @@ public class PlayerInputSystem extends EntityProcessingSystem implements
 
 		velocity.vectorX = 0;
 		velocity.vectorY = 0;
+
+		if (Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)) {
+			velocity.vectorX = Gdx.input.getAccelerometerY() * world.getDelta()
+					* VERTICAL_SPEED;
+			velocity.vectorY = -Gdx.input.getAccelerometerX()
+					* world.getDelta() * VERTICAL_SPEED;
+		}
 
 		if (up) {
 			velocity.vectorY = MathUtils.clamp(

@@ -211,7 +211,7 @@ public class EntityFactory {
 
 		Rectangle rect = new Rectangle();
 		rect.filled = true;
-		rect.color = Color.RED;
+		rect.color = Color.BLACK;
 		rect.width = width;
 		rect.height = height;
 		e.addComponent(rect);
