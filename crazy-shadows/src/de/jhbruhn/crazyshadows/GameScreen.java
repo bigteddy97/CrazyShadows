@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.math.Vector2;
 
 import de.jhbruhn.crazyshadows.systems.BallTargetCollisionSystem;
+import de.jhbruhn.crazyshadows.systems.BallTargetHideSystem;
 import de.jhbruhn.crazyshadows.systems.LightSystem;
 import de.jhbruhn.crazyshadows.systems.MovementSystem;
 import de.jhbruhn.crazyshadows.systems.PlayerInputDragSystem;
@@ -64,6 +65,7 @@ public class GameScreen implements Screen {
 		world.setSystem(bTCS);
 		PlayerInputSystem pIS = world.setSystem(new PlayerInputSystem(camera));
 		world.setSystem(new MovementSystem());
+		world.setSystem(new BallTargetHideSystem());
 		spriteRenderSystem = world.setSystem(new SpriteRenderSystem(camera),
 				true);
 		lightSystem = world.setSystem(new LightSystem(camera, physicsWorld),
