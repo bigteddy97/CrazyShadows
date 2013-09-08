@@ -54,8 +54,10 @@ public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 			target = (Target) udA;
 		} else
 			return;
-		System.out.println(ball.id + " " + target.id);
+
 		if (ball.id == target.id) {
+			ball.isInTarget = true;
+			target.hasBall = true;
 			currentCollisions.add(ball.id);
 		}
 
@@ -79,6 +81,8 @@ public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 			return;
 
 		if (ball.id == target.id) {
+			ball.isInTarget = false;
+			target.hasBall = false;
 			currentCollisions.remove(Integer.valueOf(ball.id));
 		}
 	}

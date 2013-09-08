@@ -51,6 +51,9 @@ public class EntityFactory {
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
 
+		Player player = new Player();
+		e.addComponent(player);
+
 		PhysicsBody physicsBody = new PhysicsBody();
 		CircleShape shape = new CircleShape();
 		shape.setRadius(25f);
@@ -64,6 +67,7 @@ public class EntityFactory {
 		bDef.position.x = x;
 		bDef.position.y = y;
 		Body b = physicsWorld.createBody(bDef);
+		b.setUserData(player);
 		b.createFixture(fDef);
 		physicsBody.body = b;
 		e.addComponent(physicsBody);
@@ -72,8 +76,6 @@ public class EntityFactory {
 		 * Bounds bounds = new Bounds(); bounds.radius = 43;
 		 * e.addComponent(bounds);
 		 */
-
-		e.addComponent(new Player());
 
 		world.getManager(GroupManager.class).add(e, Constants.Groups.PLAYER);
 

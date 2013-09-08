@@ -4,4 +4,5 @@ import com.artemis.Component;
 
 public class Ball extends Component {
 	public int id;
+	public boolean isInTarget;
 }

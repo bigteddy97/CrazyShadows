@@ -17,11 +17,18 @@ import com.badlogic.gdx.math.Vector2;
 import de.jhbruhn.crazyshadows.systems.BallTargetCollisionSystem;
 import de.jhbruhn.crazyshadows.systems.LightSystem;
 import de.jhbruhn.crazyshadows.systems.MovementSystem;
+import de.jhbruhn.crazyshadows.systems.PlayerInputDragSystem;
 import de.jhbruhn.crazyshadows.systems.PlayerInputSystem;
 import de.jhbruhn.crazyshadows.systems.ShapeRenderSystem;
 import de.jhbruhn.crazyshadows.systems.SpriteRenderSystem;
+import de.jhbruhn.crazyshadows.utils.ContactListenerManager;
+import de.jhbruhn.crazyshadows.utils.InputProcessorManager;
 
 public class GameScreen implements Screen {
+	static final float BOX_STEP = 1 / 120f;
+	static final int BOX_VELOCITY_ITERATIONS = 8;
+	static final int BOX_POSITION_ITERATIONS = 3;
+
 	@SuppressWarnings("unused")
 	private Game game;
 	private World world;
@@ -32,11 +39,9 @@ public class GameScreen implements Screen {
 	private ShapeRenderSystem shapeRenderSystem;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
-
-	static final float BOX_STEP = 1 / 120f;
-	static final int BOX_VELOCITY_ITERATIONS = 8;
-	static final int BOX_POSITION_ITERATIONS = 3;
-	float accumulator;
+	private ContactListenerManager contactListenerManager = new ContactListenerManager();
+	private InputProcessorManager inputProcessorManager = new InputProcessorManager();
+	private float accumulator;
 
 	/*
 	 * private HealthRenderSystem healthRenderSystem; private HudRenderSystem
@@ -54,8 +59,10 @@ public class GameScreen implements Screen {
 
 		world.setManager(new GroupManager());
 		BallTargetCollisionSystem bTCS = new BallTargetCollisionSystem();
+		PlayerInputDragSystem pIDS = new PlayerInputDragSystem(physicsWorld);
+		world.setSystem(pIDS);
 		world.setSystem(bTCS);
-		world.setSystem(new PlayerInputSystem(camera));
+		PlayerInputSystem pIS = world.setSystem(new PlayerInputSystem(camera));
 		world.setSystem(new MovementSystem());
 		spriteRenderSystem = world.setSystem(new SpriteRenderSystem(camera),
 				true);
@@ -64,7 +71,14 @@ public class GameScreen implements Screen {
 		shapeRenderSystem = world
 				.setSystem(new ShapeRenderSystem(camera), true);
 
-		physicsWorld.setContactListener(bTCS);
+		contactListenerManager.getListeners().add(bTCS);
+		contactListenerManager.getListeners().add(pIDS);
+
+		physicsWorld.setContactListener(contactListenerManager);
+
+		inputProcessorManager.getListeners().add(pIDS);
+		inputProcessorManager.getListeners().add(pIS);
+		Gdx.input.setInputProcessor(inputProcessorManager);
 
 		world.initialize();
 

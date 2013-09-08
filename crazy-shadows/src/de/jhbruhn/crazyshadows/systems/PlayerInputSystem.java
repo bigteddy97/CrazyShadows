@@ -42,11 +42,6 @@ public class PlayerInputSystem extends EntityProcessingSystem implements
 	}
 
 	@Override
-	protected void initialize() {
-		Gdx.input.setInputProcessor(this);
-	}
-
-	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.A) {
 			left = true;
