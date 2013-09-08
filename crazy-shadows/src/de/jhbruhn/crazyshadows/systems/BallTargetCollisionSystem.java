@@ -13,8 +13,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import de.jhbruhn.crazyshadows.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Ball;
+import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Target;
 import de.jhbruhn.crazyshadows.components.Velocity;
 

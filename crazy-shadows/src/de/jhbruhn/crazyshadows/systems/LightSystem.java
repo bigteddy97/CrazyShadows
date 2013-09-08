@@ -18,8 +18,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 
-import de.jhbruhn.crazyshadows.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Light;
+import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Position;
 import de.jhbruhn.crazyshadows.components.Rectangle;
 

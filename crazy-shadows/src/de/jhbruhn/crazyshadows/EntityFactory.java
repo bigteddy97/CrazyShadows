@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import de.jhbruhn.crazyshadows.components.Ball;
 import de.jhbruhn.crazyshadows.components.Light;
+import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Player;
 import de.jhbruhn.crazyshadows.components.Position;
 import de.jhbruhn.crazyshadows.components.Rectangle;

@@ -1,4 +1,4 @@
-package de.jhbruhn.crazyshadows;
+package de.jhbruhn.crazyshadows.components;
 
 import com.artemis.Component;
 import com.badlogic.gdx.physics.box2d.Body;

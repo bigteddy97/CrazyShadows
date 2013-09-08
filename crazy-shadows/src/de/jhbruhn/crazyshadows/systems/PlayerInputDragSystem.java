@@ -17,8 +17,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 
-import de.jhbruhn.crazyshadows.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Ball;
+import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Player;
 
 public class PlayerInputDragSystem extends EntityProcessingSystem implements
