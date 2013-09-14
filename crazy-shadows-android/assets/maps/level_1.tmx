@@ -5,15 +5,10 @@
   <object x="396" y="143" width="193" height="236"/>
   <object x="118" y="567" width="706" height="70"/>
   <object x="118" y="115" width="854" height="31"/>
-  <object x="396" y="93" height="5">
-   <ellipse/>
-  </object>
   <object x="784" y="139" width="175" height="470"/>
  </objectgroup>
  <objectgroup name="player" width="100" height="100">
-  <object name="player" x="474" y="488" width="29" height="29">
-   <ellipse/>
-  </object>
+  <object name="player" x="512" y="486" width="34" height="35"/>
  </objectgroup>
  <objectgroup name="balls" width="100" height="100">
   <object name="1" x="303" y="184" width="31" height="31">
