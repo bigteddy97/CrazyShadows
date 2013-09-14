@@ -14,10 +14,10 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 
+import de.jhbruhn.crazyshadows.CrazyShadows;
 import de.jhbruhn.crazyshadows.components.Light;
 import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Position;
@@ -31,26 +31,26 @@ public class LightSystem extends EntitySystem {
 	ComponentMapper<Light> lm;
 
 	private OrthographicCamera camera;
-	private RayHandler rayHandler;
 	private Map<Light, box2dLight.Light> lights = new HashMap<Light, box2dLight.Light>();
 	private World world;
+	private CrazyShadows game;
 
 	@SuppressWarnings("unchecked")
-	public LightSystem(OrthographicCamera camera, World world) {
+	public LightSystem(OrthographicCamera camera, World world, CrazyShadows game) {
 		super(Aspect.getAspectForAll(Position.class, Light.class));
 		this.camera = camera;
 		this.world = world;
+		this.game = game;
 	}
 
 	@Override
 	protected void initialize() {
 		RayHandler.useDiffuseLight(true);
 		RayHandler.setGammaCorrection(true);
-		rayHandler = new RayHandler(world);
-		rayHandler.setCombinedMatrix(camera.combined);
-		rayHandler.setCulling(true);
-		rayHandler.setBlurNum(1);
-		rayHandler.setAmbientLight(new Color(.2f, .2f, .2f, .1f));
+		game.ray = new RayHandler(world);
+		game.ray.setCombinedMatrix(camera.combined);
+		game.ray.setCulling(true);
+		game.ray.setBlurNum(1);
 
 	}
 
@@ -64,8 +64,8 @@ public class LightSystem extends EntitySystem {
 		for (int i = 0; entities.size() > i; i++) {
 			process(entities.get(i));
 		}
-		rayHandler.setCombinedMatrix(camera.combined);
-		rayHandler.updateAndRender();
+		game.ray.setCombinedMatrix(camera.combined);
+		game.ray.updateAndRender();
 	}
 
 	protected void process(Entity e) {
@@ -86,15 +86,15 @@ public class LightSystem extends EntitySystem {
 				box2dLight.Light posLight = null;
 				if (light.type == Light.LightType.POINT) {
 
-					posLight = new PointLight(rayHandler, light.rays,
+					posLight = new PointLight(game.ray, light.rays,
 							light.color, light.distance, x, y);
 				} else if (light.type == Light.LightType.DIRECTIONAL) {
-					posLight = new DirectionalLight(rayHandler, light.rays,
+					posLight = new DirectionalLight(game.ray, light.rays,
 							light.color, light.directionAngle);
 				} else if (light.type == Light.LightType.CONE) {
-					posLight = new ConeLight(rayHandler, light.rays,
-							light.color, light.distance, x, y,
-							light.directionAngle, light.coneAngle);
+					posLight = new ConeLight(game.ray, light.rays, light.color,
+							light.distance, x, y, light.directionAngle,
+							light.coneAngle);
 				}
 				lights.put(light, posLight);
 			} else {
@@ -110,7 +110,7 @@ public class LightSystem extends EntitySystem {
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
-		rayHandler.dispose();
+		game.ray.dispose();
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -58,7 +60,8 @@ public class ShapeRenderSystem extends EntitySystem {
 	protected void process(Entity e) {
 		if (pm.has(e)) {
 			Position position = pm.getSafe(e);
-
+			Gdx.gl.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			if (cm.has(e)) {
 				Circle circle = cm.getSafe(e);
 
@@ -93,6 +96,7 @@ public class ShapeRenderSystem extends EntitySystem {
 
 				shapeRenderer.end();
 			}
+			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
 	}
 
