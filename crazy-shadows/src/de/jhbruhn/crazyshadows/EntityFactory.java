@@ -40,12 +40,14 @@ public class EntityFactory {
 		// sprite.layer = Sprite.Layer.ACTORS_3;
 		// e.addComponent(sprite);
 
-		Circle c = new Circle();
-		c.color = Color.WHITE.cpy();
-		c.filled = true;
-		c.radius = 25f;
-		c.segments = 360 * 4;
-		e.addComponent(c);
+		Circle c1 = new Circle();
+		c1.color = Color.BLUE.cpy();
+		c1.filled = true;
+		c1.radius = 25f;
+		c1.segments = 360 * 4;
+		c1.borderSize = 2.5f;
+		c1.borderColor = Color.RED.cpy();
+		e.addComponent(c1);
 
 		Velocity velocity = new Velocity();
 		velocity.vectorX = 0;
@@ -54,7 +56,7 @@ public class EntityFactory {
 
 		Light light = new Light();
 		light.rays = 512 * 2;
-		light.color = Color.WHITE.cpy();
+		light.color = Color.BLUE.cpy();
 		light.distance = 256f * 2;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);

@@ -8,4 +8,6 @@ public class Circle extends Component {
 	public Color color;
 	public boolean filled;
 	public int segments = 360;
+	public float borderSize;
+	public Color borderColor;
 }

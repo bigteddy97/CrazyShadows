@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
 					RectangleMapObject c = (RectangleMapObject) o;
 
 					EntityFactory.createPlayerEntity(world, physicsWorld,
-							c.getRectangle().x, -c.getRectangle ().y)
+							c.getRectangle().x, -c.getRectangle().y)
 							.addToWorld();
 				}
 			} else if (g.getName().equals("balls")) {
@@ -167,7 +167,7 @@ public class GameScreen implements Screen {
 		case 2:
 			return new Color(1, 0, 0, 1);
 		case 3:
-			return new Color(0, 0, 1, 1);
+			return new Color(.5f, .5f, 0, 1);
 
 		}
 		return new Color(0, 1, 0, 1);
