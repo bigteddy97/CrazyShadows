@@ -126,8 +126,10 @@ public class GameScreen implements Screen {
 				for (TiledObject o : g.objects) {
 					int id = Integer.valueOf(o.name);
 					Color color = getColorForId(id);
-					EntityFactory.createBallEntitiy(world, physicsWorld, o.x,
-							-o.y, id, color).addToWorld();
+					float radius = (o.width / 2f + o.height / 2) / 2;
+					EntityFactory.createBallEntitiy(world, physicsWorld,
+							o.x - o.width / 2, -o.y - o.height / 2, id, color,
+							radius).addToWorld();
 				}
 			} else if (g.name.equals("targets")) {
 				for (TiledObject o : g.objects) {

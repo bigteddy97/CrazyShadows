@@ -12,12 +12,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import de.jhbruhn.crazyshadows.components.Ball;
+import de.jhbruhn.crazyshadows.components.Circle;
 import de.jhbruhn.crazyshadows.components.Light;
 import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Player;
 import de.jhbruhn.crazyshadows.components.Position;
 import de.jhbruhn.crazyshadows.components.Rectangle;
-import de.jhbruhn.crazyshadows.components.Sprite;
 import de.jhbruhn.crazyshadows.components.Target;
 import de.jhbruhn.crazyshadows.components.Velocity;
 
@@ -32,13 +32,20 @@ public class EntityFactory {
 		position.y = y;
 		e.addComponent(position);
 
-		Sprite sprite = new Sprite();
-		sprite.name = "player";
-		sprite.r = 93 / 255f;
-		sprite.g = 255 / 255f;
-		sprite.b = 129 / 255f;
-		sprite.layer = Sprite.Layer.ACTORS_3;
-		e.addComponent(sprite);
+		// Sprite sprite = new Sprite();
+		// sprite.name = "player";
+		// sprite.r = 93 / 255f;
+		// sprite.g = 255 / 255f;
+		// sprite.b = 129 / 255f;
+		// sprite.layer = Sprite.Layer.ACTORS_3;
+		// e.addComponent(sprite);
+
+		Circle c = new Circle();
+		c.color = new Color(93 / 255f, 255 / 255f, 129 / 255f, .5f);
+		c.filled = true;
+		c.radius = 25f;
+		c.segments = 360 * 4;
+		e.addComponent(c);
 
 		Velocity velocity = new Velocity();
 		velocity.vectorX = 0;
@@ -85,7 +92,7 @@ public class EntityFactory {
 
 	public static Entity createBallEntitiy(World world,
 			com.badlogic.gdx.physics.box2d.World physicsWorld, float x,
-			float y, int id, Color color) {
+			float y, int id, Color color, float radius) {
 		Entity e = world.createEntity();
 
 		Position position = new Position();
@@ -97,18 +104,17 @@ public class EntityFactory {
 		ball.id = id;
 		e.addComponent(ball);
 
-		Sprite sprite = new Sprite();
-		sprite.name = "player";
-		sprite.r = 0 / 255f;
-		sprite.g = 255 / 255f;
-		sprite.b = 0 / 255f;
-		sprite.layer = Sprite.Layer.ACTORS_1;
-		e.addComponent(sprite);
+		Circle c = new Circle();
+		c.color = color;
+		c.filled = true;
+		c.radius = radius;
+		c.segments = 360 * 4;
+		e.addComponent(c);
 
 		PhysicsBody physicsBody = new PhysicsBody();
 
 		CircleShape shape = new CircleShape();
-		shape.setRadius(26f);
+		shape.setRadius(radius);
 		FixtureDef fDef = new FixtureDef();
 		fDef.restitution = 0f;
 		fDef.friction = 0.01f;

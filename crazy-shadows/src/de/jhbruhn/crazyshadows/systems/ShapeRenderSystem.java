@@ -61,6 +61,7 @@ public class ShapeRenderSystem extends EntitySystem {
 		if (pm.has(e)) {
 			Position position = pm.getSafe(e);
 			Gdx.gl.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glEnable(GL10.GL_LINE_SMOOTH);
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			if (cm.has(e)) {
 				Circle circle = cm.getSafe(e);
@@ -70,10 +71,11 @@ public class ShapeRenderSystem extends EntitySystem {
 				if (circle.filled) {
 					shapeRenderer.begin(ShapeType.FilledCircle);
 					shapeRenderer.filledCircle(position.x, position.y,
-							circle.radius);
+							circle.radius, circle.segments);
 				} else {
 					shapeRenderer.begin(ShapeType.Circle);
-					shapeRenderer.circle(position.x, position.y, circle.radius);
+					shapeRenderer.circle(position.x, position.y, circle.radius,
+							circle.segments);
 				}
 
 				shapeRenderer.end();
@@ -97,6 +99,7 @@ public class ShapeRenderSystem extends EntitySystem {
 				shapeRenderer.end();
 			}
 			Gdx.gl.glDisable(GL10.GL_BLEND);
+			Gdx.gl.glDisable(GL10.GL_LINE_SMOOTH);
 		}
 	}
 

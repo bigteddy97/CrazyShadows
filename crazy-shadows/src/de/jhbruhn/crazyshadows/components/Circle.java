@@ -7,4 +7,5 @@ public class Circle extends Component {
 	public float radius;
 	public Color color;
 	public boolean filled;
+	public int segments = 360;
 }
