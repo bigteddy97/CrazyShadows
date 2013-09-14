@@ -19,6 +19,7 @@ import de.jhbruhn.crazyshadows.components.Player;
 import de.jhbruhn.crazyshadows.components.Position;
 import de.jhbruhn.crazyshadows.components.Rectangle;
 import de.jhbruhn.crazyshadows.components.Target;
+import de.jhbruhn.crazyshadows.components.Text;
 import de.jhbruhn.crazyshadows.components.Velocity;
 
 public class EntityFactory {
@@ -228,6 +229,24 @@ public class EntityFactory {
 		pos.x = x;
 		pos.y = y;
 		e.addComponent(pos);
+
+		return e;
+	}
+
+	public static Entity createTextEntity(World world, float x, float y,
+			float width, String text, Color color) {
+		Entity e = world.createEntity();
+
+		Position p = new Position();
+		p.x = x;
+		p.y = y;
+		e.addComponent(p);
+
+		Text t = new Text();
+		t.text = text;
+		t.color = color;
+		t.width = width;
+		e.addComponent(t);
 
 		return e;
 	}

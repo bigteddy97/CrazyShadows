@@ -29,6 +29,7 @@ import de.jhbruhn.crazyshadows.systems.PlayerInputDragSystem;
 import de.jhbruhn.crazyshadows.systems.PlayerInputSystem;
 import de.jhbruhn.crazyshadows.systems.ShapeRenderSystem;
 import de.jhbruhn.crazyshadows.systems.SpriteRenderSystem;
+import de.jhbruhn.crazyshadows.systems.TextRenderSystem;
 import de.jhbruhn.crazyshadows.utils.ContactListenerManager;
 import de.jhbruhn.crazyshadows.utils.InputProcessorManager;
 
@@ -45,6 +46,7 @@ public class GameScreen implements Screen {
 	private SpriteRenderSystem spriteRenderSystem;
 	private LightSystem lightSystem;
 	private ShapeRenderSystem shapeRenderSystem;
+	private TextRenderSystem textRenderSystem;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 	private ContactListenerManager contactListenerManager = new ContactListenerManager();
@@ -91,6 +93,8 @@ public class GameScreen implements Screen {
 				game), true);
 		shapeRenderSystem = world
 				.setSystem(new ShapeRenderSystem(camera), true);
+		textRenderSystem = world.setSystem(new TextRenderSystem(this.camera),
+				true);
 
 		contactListenerManager.getListeners().add(bTCS);
 		contactListenerManager.getListeners().add(pIDS);
@@ -118,8 +122,7 @@ public class GameScreen implements Screen {
 					RectangleMapObject r = (RectangleMapObject) o;
 
 					EntityFactory.createWallEntity(world, physicsWorld,
-							r.getRectangle().x,
-							-r.getRectangle().y - r.getRectangle().height,
+							r.getRectangle().x, r.getRectangle().y,
 							r.getRectangle().width, r.getRectangle().height)
 							.addToWorld();
 				}
@@ -128,7 +131,7 @@ public class GameScreen implements Screen {
 					RectangleMapObject c = (RectangleMapObject) o;
 
 					EntityFactory.createPlayerEntity(world, physicsWorld,
-							c.getRectangle().x, -c.getRectangle().y)
+							c.getRectangle().x, c.getRectangle().y)
 							.addToWorld();
 				}
 			} else if (g.getName().equals("balls")) {
@@ -140,7 +143,7 @@ public class GameScreen implements Screen {
 					float radius = c.getEllipse().width / 2;
 					EntityFactory.createBallEntitiy(world, physicsWorld,
 							c.getEllipse().x + radius,
-							-c.getEllipse().y - radius, id, color, radius)
+							c.getEllipse().y + radius, id, color, radius)
 							.addToWorld();
 				}
 			} else if (g.getName().equals("targets")) {
@@ -149,12 +152,31 @@ public class GameScreen implements Screen {
 
 					int id = Integer.valueOf(o.getName());
 					Color color = getColorForId(id);
-					System.out.println(id + " " + color);
+
 					EntityFactory.createTargetEntity(world, physicsWorld,
-							r.getRectangle().x,
-							-r.getRectangle().y - r.getRectangle().height,
+							r.getRectangle().x, r.getRectangle().y,
 							r.getRectangle().width, r.getRectangle().height,
 							id, color).addToWorld();
+				}
+			} else if (g.getName().equals("texts")) {
+				for (MapObject o : g.getObjects()) {
+					RectangleMapObject r = (RectangleMapObject) o;
+					Color c = null;
+					try {
+						c = Color.valueOf(r.getProperties().get("color",
+								String.class));
+					} catch (Exception e) {
+						c = Color.WHITE;
+					}
+
+					String text = r.getProperties().get("text", String.class)
+							.replace("\\n", "\n");
+					System.out.println(c);
+
+					EntityFactory.createTextEntity(world, r.getRectangle().x,
+							r.getRectangle().y + r.getRectangle().height,
+							r.getRectangle().getWidth(), text, c).addToWorld();
+
 				}
 			}
 		}
@@ -218,6 +240,7 @@ public class GameScreen implements Screen {
 		shapeRenderSystem.process();
 		spriteRenderSystem.process();
 		lightSystem.process();
+		textRenderSystem.process();
 
 		if (fadeInTimer.getPercentage() < 0.33f) {
 			Gdx.gl.glEnable(GL10.GL_BLEND);
@@ -225,7 +248,7 @@ public class GameScreen implements Screen {
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer
 					.setColor(0, 0, 0, 1 - fadeInTimer.getPercentage() * 3);
-			shapeRenderer.rect(1000, -1000, 5000, 5000);
+			shapeRenderer.rect(-1000, -1000, 5000, 5000);
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
