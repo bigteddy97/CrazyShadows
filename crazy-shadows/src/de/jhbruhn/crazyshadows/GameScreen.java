@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledObject;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledObjectGroup;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 
@@ -49,8 +52,8 @@ public class GameScreen implements Screen {
 	private InputProcessorManager inputProcessorManager = new InputProcessorManager();
 	private float accumulator;
 
-	private Timer fadeInTimer = new Timer(2);
-	private Timer fadeOutTimer = new Timer(2);
+	private Timer fadeInTimer = new Timer(1);
+	private Timer fadeOutTimer = new Timer(1);
 
 	private Color ambientLightColor = new Color(0, 0, 0, 0);
 
@@ -106,39 +109,53 @@ public class GameScreen implements Screen {
 	}
 
 	private void loadMap(String mapName) {
-		TiledMap map = TiledLoader.createMap(Gdx.files.internal("maps/"
-				+ mapName + ".tmx"));
-		for (TiledObjectGroup g : map.objectGroups) {
+		TiledMap map = new TmxMapLoader().load("maps/" + mapName + ".tmx");
+		for (MapLayer g : map.getLayers()) {
 
 			// Important: we need to inverse the y-coordinates here because
 			// tmx's system is different from libgdxs
-			if (g.name.equals("walls")) {
-				for (TiledObject o : g.objects) {
-					EntityFactory.createWallEntity(world, physicsWorld, o.x,
-							-o.y - o.height, o.width, o.height).addToWorld();
+			if (g.getName().equals("walls")) {
+				for (MapObject o : g.getObjects()) {
+					RectangleMapObject r = (RectangleMapObject) o;
+
+					EntityFactory.createWallEntity(world, physicsWorld,
+							r.getRectangle().x,
+							-r.getRectangle().y - r.getRectangle().height,
+							r.getRectangle().width, r.getRectangle().height)
+							.addToWorld();
 				}
-			} else if (g.name.equals("player")) {
-				for (TiledObject o : g.objects) {
-					EntityFactory.createPlayerEntity(world, physicsWorld, o.x,
-							-o.y).addToWorld();
+			} else if (g.getName().equals("player")) {
+				for (MapObject o : g.getObjects()) {
+					RectangleMapObject c = (RectangleMapObject) o;
+
+					EntityFactory.createPlayerEntity(world, physicsWorld,
+							c.getRectangle().x, -c.getRectangle ().y)
+							.addToWorld();
 				}
-			} else if (g.name.equals("balls")) {
-				for (TiledObject o : g.objects) {
-					int id = Integer.valueOf(o.name);
+			} else if (g.getName().equals("balls")) {
+				for (MapObject o : g.getObjects()) {
+					EllipseMapObject c = (EllipseMapObject) o;
+
+					int id = Integer.valueOf(o.getName());
 					Color color = getColorForId(id);
-					float radius = (o.width / 2f + o.height / 2) / 2;
+					float radius = c.getEllipse().width / 2;
 					EntityFactory.createBallEntitiy(world, physicsWorld,
-							o.x - o.width / 2, -o.y - o.height / 2, id, color,
-							radius).addToWorld();
+							c.getEllipse().x + radius,
+							-c.getEllipse().y - radius, id, color, radius)
+							.addToWorld();
 				}
-			} else if (g.name.equals("targets")) {
-				for (TiledObject o : g.objects) {
-					int id = Integer.valueOf(o.name);
+			} else if (g.getName().equals("targets")) {
+				for (MapObject o : g.getObjects()) {
+					RectangleMapObject r = (RectangleMapObject) o;
+
+					int id = Integer.valueOf(o.getName());
 					Color color = getColorForId(id);
 					System.out.println(id + " " + color);
-					EntityFactory.createTargetEntity(world, physicsWorld, o.x,
-							-o.y - o.height, o.width, o.height, id, color)
-							.addToWorld();
+					EntityFactory.createTargetEntity(world, physicsWorld,
+							r.getRectangle().x,
+							-r.getRectangle().y - r.getRectangle().height,
+							r.getRectangle().width, r.getRectangle().height,
+							id, color).addToWorld();
 				}
 			}
 		}
@@ -206,10 +223,10 @@ public class GameScreen implements Screen {
 		if (fadeInTimer.getPercentage() < 0.33f) {
 			Gdx.gl.glEnable(GL10.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-			shapeRenderer.begin(ShapeType.FilledRectangle);
+			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer
 					.setColor(0, 0, 0, 1 - fadeInTimer.getPercentage() * 3);
-			shapeRenderer.filledRect(-1000, -1000, 5000, 5000);
+			shapeRenderer.rect(1000, -1000, 5000, 5000);
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
@@ -217,9 +234,9 @@ public class GameScreen implements Screen {
 		if (fadeOutTimer.getPercentage() > 0) {
 			Gdx.gl.glEnable(GL10.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-			shapeRenderer.begin(ShapeType.FilledRectangle);
+			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(0, 0, 0, fadeOutTimer.getPercentage());
-			shapeRenderer.filledRect(-1000, -1000, 5000, 5000);
+			shapeRenderer.rect(-1000, -1000, 5000, 5000);
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}

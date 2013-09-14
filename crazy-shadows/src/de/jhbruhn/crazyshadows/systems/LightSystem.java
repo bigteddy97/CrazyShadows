@@ -46,7 +46,7 @@ public class LightSystem extends EntitySystem {
 	@Override
 	protected void initialize() {
 		RayHandler.useDiffuseLight(true);
-		// RayHandler.setGammaCorrection(true);
+		RayHandler.setGammaCorrection(true);
 		game.ray = new RayHandler(world);
 		game.ray.setCombinedMatrix(camera.combined);
 		game.ray.setBlurNum(3);

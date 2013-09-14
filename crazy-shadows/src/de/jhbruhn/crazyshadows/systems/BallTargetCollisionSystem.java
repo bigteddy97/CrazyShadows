@@ -65,8 +65,12 @@ public class BallTargetCollisionSystem extends EntityProcessingSystem implements
 
 	@Override
 	public void endContact(Contact contact) {
-		Object udA = contact.getFixtureA().getBody().getUserData();
-		Object udB = contact.getFixtureB().getBody().getUserData();
+		Object udA = null;
+		Object udB = null;
+		if (contact.getFixtureA() != null && contact.getFixtureB() != null) {
+			udA = contact.getFixtureA().getBody().getUserData();
+			udB = contact.getFixtureB().getBody().getUserData();
+		}
 
 		Ball ball = null;
 		Target target = null;

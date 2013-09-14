@@ -55,7 +55,10 @@ public class PlayerInputDragSystem extends EntityProcessingSystem implements
 			def.length = 25 * 2;
 			currentJoint = physicsWorld.createJoint(def);
 		} else if (!isDragging && currentJoint != null) {
-			physicsWorld.destroyJoint(currentJoint);
+			if (currentJoint.getBodyA() != null
+					&& currentJoint.getBodyB() != null) {
+				physicsWorld.destroyJoint(currentJoint);
+			}
 			currentJoint = null;
 		}
 	}
@@ -78,6 +81,9 @@ public class PlayerInputDragSystem extends EntityProcessingSystem implements
 
 	@Override
 	public void endContact(Contact contact) {
+		if (contact.getFixtureA() == null || contact.getFixtureB() == null) {
+			return;
+		}
 		if (contact.getFixtureA().getBody().getUserData() instanceof Player) {
 			if (contact.getFixtureB().getBody().getUserData() instanceof Ball) {
 				currentPlayerContact = null;

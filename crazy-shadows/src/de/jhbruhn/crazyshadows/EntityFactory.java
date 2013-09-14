@@ -41,7 +41,7 @@ public class EntityFactory {
 		// e.addComponent(sprite);
 
 		Circle c = new Circle();
-		c.color = new Color(93 / 255f, 255 / 255f, 129 / 255f, .5f);
+		c.color = Color.WHITE.cpy();
 		c.filled = true;
 		c.radius = 25f;
 		c.segments = 360 * 4;
@@ -54,7 +54,7 @@ public class EntityFactory {
 
 		Light light = new Light();
 		light.rays = 512 * 2;
-		light.color = new Color(1, 1, 1, .75f);
+		light.color = Color.WHITE.cpy();
 		light.distance = 256f * 2;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);

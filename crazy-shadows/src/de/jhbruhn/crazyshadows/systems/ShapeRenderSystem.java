@@ -69,14 +69,13 @@ public class ShapeRenderSystem extends EntitySystem {
 				shapeRenderer.setColor(circle.color);
 
 				if (circle.filled) {
-					shapeRenderer.begin(ShapeType.FilledCircle);
-					shapeRenderer.filledCircle(position.x, position.y,
-							circle.radius, circle.segments);
+					shapeRenderer.begin(ShapeType.Filled);
 				} else {
-					shapeRenderer.begin(ShapeType.Circle);
-					shapeRenderer.circle(position.x, position.y, circle.radius,
-							circle.segments);
+					shapeRenderer.begin(ShapeType.Line);
 				}
+
+				shapeRenderer.circle(position.x, position.y, circle.radius,
+						circle.segments);
 
 				shapeRenderer.end();
 			}
@@ -87,14 +86,12 @@ public class ShapeRenderSystem extends EntitySystem {
 				shapeRenderer.setColor(rectangle.color);
 
 				if (rectangle.filled) {
-					shapeRenderer.begin(ShapeType.FilledRectangle);
-					shapeRenderer.filledRect(position.x, position.y,
-							rectangle.width, rectangle.height);
+					shapeRenderer.begin(ShapeType.Filled);
 				} else {
-					shapeRenderer.begin(ShapeType.Rectangle);
-					shapeRenderer.rect(position.x, position.y, rectangle.width,
-							rectangle.height);
+					shapeRenderer.begin(ShapeType.Line);
 				}
+				shapeRenderer.rect(position.x, position.y, rectangle.width,
+						rectangle.height);
 
 				shapeRenderer.end();
 			}
