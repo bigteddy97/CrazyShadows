@@ -133,6 +133,7 @@ public class GameScreen implements Screen {
 				for (TiledObject o : g.objects) {
 					int id = Integer.valueOf(o.name);
 					Color color = getColorForId(id);
+					System.out.println(id + " " + color);
 					EntityFactory.createTargetEntity(world, physicsWorld, o.x,
 							-o.y - o.height, o.width, o.height, id, color)
 							.addToWorld();

@@ -126,7 +126,7 @@ public class EntityFactory {
 
 		Light light = new Light();
 		light.rays = 128;
-		light.color = color;
+		light.color = color.cpy();
 		light.distance = 64;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
@@ -149,7 +149,7 @@ public class EntityFactory {
 		Rectangle r = new Rectangle();
 		r.width = width;
 		r.height = height;
-		r.color = Color.GREEN;
+		r.color = color.cpy();
 		r.filled = true;
 		e.addComponent(r);
 
@@ -179,7 +179,7 @@ public class EntityFactory {
 
 		Light light = new Light();
 		light.rays = 256;
-		light.color = color;
+		light.color = color.cpy();
 		light.distance = 128f;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
@@ -211,7 +211,7 @@ public class EntityFactory {
 
 		Rectangle rect = new Rectangle();
 		rect.filled = true;
-		rect.color = Color.BLACK;
+		rect.color = Color.BLACK.cpy();
 		rect.width = width;
 		rect.height = height;
 		e.addComponent(rect);
