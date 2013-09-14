@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 		ImagePacker.run();
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "crazy-shadows";
+		cfg.title = "Crazy Shadows";
 		cfg.useGL20 = false;
 		cfg.samples = 16;
 
