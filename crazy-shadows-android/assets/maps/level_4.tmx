@@ -18,7 +18,7 @@
   <object name="3" x="823" y="302" width="54" height="54"/>
  </objectgroup>
  <objectgroup name="balls" width="100" height="100">
-  <object name="3" x="1062" y="428" width="48" height="48">
+  <object name="3" x="1062" y="428" width="50" height="49">
    <ellipse/>
   </object>
   <object name="2" x="780" y="530" width="48" height="48">

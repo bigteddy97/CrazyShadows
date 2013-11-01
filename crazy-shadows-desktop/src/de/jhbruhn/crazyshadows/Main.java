@@ -11,8 +11,9 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Crazy Shadows";
 		cfg.useGL20 = false;
-		cfg.samples = 16;
+		cfg.samples = 4;
 		cfg.vSyncEnabled = true;
+		cfg.depth = 0;	
 
 		new LwjglApplication(new CrazyShadows(), cfg);
 	}

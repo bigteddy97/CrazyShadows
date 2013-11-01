@@ -11,7 +11,7 @@
   <object name="player" x="512" y="486" width="34" height="35"/>
  </objectgroup>
  <objectgroup name="balls" width="100" height="100">
-  <object name="1" x="303" y="184" width="31" height="31">
+  <object name="1" x="296" y="176" width="59" height="59">
    <properties>
     <property name="id" value="1"/>
    </properties>
