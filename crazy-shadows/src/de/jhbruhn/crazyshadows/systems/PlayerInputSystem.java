@@ -150,17 +150,6 @@ public class PlayerInputSystem extends EntityProcessingSystem implements
 
 		camera.position.x = position.x;
 		camera.position.y = position.y;
-
-		/*
-		 * float angleInRadians = Utils.angleInRadians(position.x, position.y,
-		 * destinationX, destinationY);
-		 * 
-		 * position.x += TrigLUT.cos(angleInRadians) * 500f * world.getDelta();
-		 * position.y += TrigLUT.sin(angleInRadians) * 500f * world.getDelta();
-		 */
-		/*
-		 * position.x = mouseVector.x; position.y = mouseVector.y;
-		 */
 	}
 
 }

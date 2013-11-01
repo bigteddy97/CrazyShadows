@@ -3,6 +3,13 @@ pack.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+bg
+  rotate: false
+  xy: 1, 53
+  size: 360, 360
+  orig: 360, 360
+  offset: 0, 0
+  index: -1
 player
   rotate: false
   xy: 1, 1

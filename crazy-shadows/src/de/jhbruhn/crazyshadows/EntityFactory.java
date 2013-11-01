@@ -18,6 +18,7 @@ import de.jhbruhn.crazyshadows.components.PhysicsBody;
 import de.jhbruhn.crazyshadows.components.Player;
 import de.jhbruhn.crazyshadows.components.Position;
 import de.jhbruhn.crazyshadows.components.Rectangle;
+import de.jhbruhn.crazyshadows.components.Sprite;
 import de.jhbruhn.crazyshadows.components.Target;
 import de.jhbruhn.crazyshadows.components.Text;
 import de.jhbruhn.crazyshadows.components.Velocity;
@@ -240,6 +241,22 @@ public class EntityFactory {
 		t.width = width;
 		e.addComponent(t);
 
+		return e;
+	}
+	
+	public static Entity createBackgroundEntity(World world, float x, float y) {
+		Entity e = world.createEntity();
+		
+		Position p = new Position();
+		p.x = x;
+		p.y = y;
+		e.addComponent(p);
+		
+		Sprite s = new Sprite();
+		s.name = "bg";
+		s.isBG = true;
+		e.addComponent(s);
+		
 		return e;
 	}
 }

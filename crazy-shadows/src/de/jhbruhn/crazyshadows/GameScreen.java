@@ -1,5 +1,9 @@
 package de.jhbruhn.crazyshadows;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
@@ -114,6 +118,10 @@ public class GameScreen implements Screen {
 	}
 
 	private void loadMap(String mapName) {
+		List<Entity> ents = new ArrayList<Entity>();
+		float lowestX = -3000, lowestY = -3000;
+		float highestX = 5000, highestY = 5000;
+
 		TiledMap map = new TmxMapLoader().load("maps/" + mapName + ".tmx");
 		for (MapLayer g : map.getLayers()) {
 
@@ -122,23 +130,25 @@ public class GameScreen implements Screen {
 			if (g.getName().equals("walls")) {
 				for (MapObject o : g.getObjects()) {
 					RectangleMapObject r = (RectangleMapObject) o;
+					float x = r.getRectangle().x, y = r.getRectangle().y;
+					float width = r.getRectangle().width, height = r
+							.getRectangle().height;
+					ents.add(EntityFactory.createWallEntity(world,
+							physicsWorld, x, y, width, height));
 
-					EntityFactory.createWallEntity(world, physicsWorld,
-							r.getRectangle().x, r.getRectangle().y,
-							r.getRectangle().width, r.getRectangle().height)
-							.addToWorld();
+					lowestX = Math.min(lowestX, x);
+					lowestY = Math.min(lowestY, y);
+					highestX = Math.max(highestX, x + width);
+					highestY = Math.max(highestY, y + height);
 				}
 			} else if (g.getName().equals("player")) {
 				for (MapObject o : g.getObjects()) {
 					RectangleMapObject c = (RectangleMapObject) o;
-
-					EntityFactory.createPlayerEntity(
-							world,
-							physicsWorld,
-							c.getRectangle().x + c.getRectangle().getWidth()
-									/ 2,
+					ents.add(EntityFactory.createPlayerEntity(world,
+							physicsWorld, c.getRectangle().x
+									+ c.getRectangle().getWidth() / 2,
 							c.getRectangle().y + c.getRectangle().getHeight()
-									/ 2).addToWorld();
+									/ 2));
 				}
 			} else if (g.getName().equals("balls")) {
 				for (MapObject o : g.getObjects()) {
@@ -147,10 +157,9 @@ public class GameScreen implements Screen {
 					int id = Integer.valueOf(o.getName());
 					Color color = getColorForId(id);
 					float radius = c.getEllipse().width / 2;
-					EntityFactory.createBallEntitiy(world, physicsWorld,
-							c.getEllipse().x + radius,
-							c.getEllipse().y + radius, id, color, radius)
-							.addToWorld();
+					ents.add(EntityFactory.createBallEntitiy(world,
+							physicsWorld, c.getEllipse().x + radius,
+							c.getEllipse().y + radius, id, color, radius));
 				}
 			} else if (g.getName().equals("targets")) {
 				for (MapObject o : g.getObjects()) {
@@ -159,10 +168,10 @@ public class GameScreen implements Screen {
 					int id = Integer.valueOf(o.getName());
 					Color color = getColorForId(id);
 
-					EntityFactory.createTargetEntity(world, physicsWorld,
-							r.getRectangle().x, r.getRectangle().y,
-							r.getRectangle().width, r.getRectangle().height,
-							id, color).addToWorld();
+					ents.add(EntityFactory.createTargetEntity(world,
+							physicsWorld, r.getRectangle().x,
+							r.getRectangle().y, r.getRectangle().width,
+							r.getRectangle().height, id, color));
 				}
 			} else if (g.getName().equals("texts")) {
 				for (MapObject o : g.getObjects()) {
@@ -179,13 +188,23 @@ public class GameScreen implements Screen {
 							.replace("\\n", "\n");
 					System.out.println(c);
 
-					EntityFactory.createTextEntity(world, r.getRectangle().x,
-							r.getRectangle().y + r.getRectangle().height,
-							r.getRectangle().getWidth(), text, c).addToWorld();
+					ents.add(EntityFactory.createTextEntity(world, r
+							.getRectangle().x,
+							r.getRectangle().y + r.getRectangle().height, r
+									.getRectangle().getWidth(), text, c));
 
 				}
 			}
 		}
+
+		for (float x = lowestX; x < highestX; x += 256)
+			for (float y = lowestY; y < highestY; y += 256) {
+				EntityFactory.createBackgroundEntity(world, x, y).addToWorld();
+			}
+
+		for (Entity e : ents)
+			e.addToWorld();
+
 	}
 
 	private Color getColorForId(int id) {
@@ -242,10 +261,10 @@ public class GameScreen implements Screen {
 			accumulator -= BOX_STEP;
 		}
 
-		if (shapeRenderSystem != null)
-			shapeRenderSystem.process();
 		if (spriteRenderSystem != null)
 			spriteRenderSystem.process();
+		if (shapeRenderSystem != null)
+			shapeRenderSystem.process();
 		if (lightSystem != null)
 			lightSystem.process();
 		textRenderSystem.process();

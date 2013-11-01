@@ -1,8 +1,6 @@
 package de.jhbruhn.crazyshadows.systems;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -121,15 +119,6 @@ public class SpriteRenderSystem extends EntitySystem {
 		regionsByEntity.set(e.getId(), regions.get(sprite.name));
 
 		sortedEntities.add(e);
-
-		Collections.sort(sortedEntities, new Comparator<Entity>() {
-			@Override
-			public int compare(Entity e1, Entity e2) {
-				Sprite s1 = sm.get(e1);
-				Sprite s2 = sm.get(e2);
-				return s1.layer.compareTo(s2.layer);
-			}
-		});
 	}
 
 	@Override
