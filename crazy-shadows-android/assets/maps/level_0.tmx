@@ -6,10 +6,10 @@
   </data>
  </layer>
  <objectgroup name="walls" width="100" height="100">
-  <object x="414" y="111" width="154" height="472"/>
-  <object x="664" y="107" width="131" height="491"/>
-  <object x="493" y="46" width="223" height="93"/>
-  <object x="539" y="566" width="200" height="62"/>
+  <object x="539" y="110" width="26" height="462"/>
+  <object x="664" y="107" width="21" height="486"/>
+  <object x="540" y="96" width="144" height="25"/>
+  <object x="539" y="566" width="147" height="26"/>
  </objectgroup>
  <objectgroup name="balls" width="100" height="100">
   <object name="1" x="593" y="441" width="43" height="43">

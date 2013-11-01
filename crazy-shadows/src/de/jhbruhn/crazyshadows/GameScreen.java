@@ -197,10 +197,10 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		for (float x = lowestX; x < highestX; x += 256)
-			for (float y = lowestY; y < highestY; y += 256) {
-				EntityFactory.createBackgroundEntity(world, x, y).addToWorld();
-			}
+//		for (float x = lowestX; x < highestX; x += 256)
+//			for (float y = lowestY; y < highestY; y += 256) {
+//				EntityFactory.createBackgroundEntity(world, x, y).addToWorld();
+//			}
 
 		for (Entity e : ents)
 			e.addToWorld();
