@@ -33,21 +33,13 @@ public class EntityFactory {
 		position.y = y;
 		e.addComponent(position);
 
-		// Sprite sprite = new Sprite();
-		// sprite.name = "player";
-		// sprite.r = 93 / 255f;
-		// sprite.g = 255 / 255f;
-		// sprite.b = 129 / 255f;
-		// sprite.layer = Sprite.Layer.ACTORS_3;
-		// e.addComponent(sprite);
-
 		Circle c1 = new Circle();
-		c1.color = Color.BLUE.cpy();
+		c1.color = Color.ORANGE.cpy();
 		c1.filled = true;
 		c1.radius = 25f;
 		c1.segments = 360 * 4;
 		c1.borderSize = 2.5f;
-		c1.borderColor = Color.RED.cpy();
+		c1.borderColor = Color.ORANGE.cpy();
 		e.addComponent(c1);
 
 		Velocity velocity = new Velocity();
@@ -57,7 +49,7 @@ public class EntityFactory {
 
 		Light light = new Light();
 		light.rays = 512 * 2;
-		light.color = Color.BLUE.cpy();
+		light.color = Color.ORANGE.cpy();
 		light.distance = 256f * 2;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);

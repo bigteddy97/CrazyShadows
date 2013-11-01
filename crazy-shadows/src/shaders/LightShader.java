@@ -18,7 +18,7 @@ public final class LightShader {
 				+ "varying vec4 v_color;\n" //
 				+ "void main()\n" //
 				+ "{\n" //
-				+ "   v_color = s * quad_colors + rand(s);\n" //
+				+ "   v_color = s * quad_colors;\n" //
 				+ "   gl_Position =  u_projTrans * vertex_positions;\n" //
 				+ "}\n";
 		final String fragmentShader = "#ifdef GL_ES\n" //
@@ -27,12 +27,9 @@ public final class LightShader {
 				+ "#define MED \n"
 				+ "#endif\n" //
 				+ "varying vec4 v_color;\n" //
-				+ "float rand(vec2 co){\n"//
-				+ "return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);\n"//
-				+ "}\n"//
 				+ "void main()\n"//
 				+ "{\n" //
-				+ "  gl_FragColor = " + gamma + "(v_color) + rand(1,2);\n" //
+				+ "  gl_FragColor = " + gamma + "(v_color);\n" //
 				+ "}";
 
 		ShaderProgram.pedantic = false;

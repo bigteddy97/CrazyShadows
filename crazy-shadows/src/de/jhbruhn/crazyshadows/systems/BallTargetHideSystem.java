@@ -50,6 +50,7 @@ public class BallTargetHideSystem extends EntityProcessingSystem {
 		}
 		if (!hide)
 			return;
+		
 		boolean remove = false;
 
 		Light l = lm.get(e);
@@ -72,6 +73,7 @@ public class BallTargetHideSystem extends EntityProcessingSystem {
 			if (c.color.a <= 0)
 				remove = true;
 		}
+		
 		if (remove) {
 			e.deleteFromWorld();
 		}

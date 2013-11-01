@@ -58,8 +58,7 @@ public class TextRenderSystem extends EntitySystem {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		batch.begin();
-		Gdx.gl10.glEnable(GL10.GL_ALPHA_TEST);
-		Gdx.gl10.glAlphaFunc(GL10.GL_GREATER, 0.5f);
+		Gdx.gl.glEnable(GL10.GL_ALPHA_TEST);
 		batch.setProjectionMatrix(camera.combined);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
@@ -69,7 +68,7 @@ public class TextRenderSystem extends EntitySystem {
 			font.setColor(t.color);
 			font.drawWrapped(batch, t.text, p.x, p.y, t.width);
 		}
-		Gdx.gl10.glDisable(GL10.GL_ALPHA_TEST);
+		Gdx.gl.glDisable(GL10.GL_ALPHA_TEST);
 		batch.end();
 	}
 

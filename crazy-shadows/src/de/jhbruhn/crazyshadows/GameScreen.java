@@ -79,14 +79,12 @@ public class GameScreen implements Screen {
 		world = new World();
 
 		world.setManager(new GroupManager());
-		BallTargetCollisionSystem bTCS = new BallTargetCollisionSystem();
-		PlayerInputDragSystem pIDS = new PlayerInputDragSystem(physicsWorld);
-		world.setSystem(pIDS);
-		world.setSystem(bTCS);
+
 		PlayerInputSystem pIS = world.setSystem(new PlayerInputSystem(camera));
-		world.setSystem(new MovementSystem());
-		world.setSystem(new BallTargetHideSystem());
-		world.setSystem(new LevelOverSystem(this));
+		PlayerInputDragSystem pIDS = world.setSystem(new PlayerInputDragSystem(
+				physicsWorld));
+		BallTargetCollisionSystem bTCS = world
+				.setSystem(new BallTargetCollisionSystem());
 		spriteRenderSystem = world.setSystem(new SpriteRenderSystem(camera),
 				true);
 		lightSystem = world.setSystem(new LightSystem(camera, physicsWorld,
@@ -95,6 +93,10 @@ public class GameScreen implements Screen {
 				.setSystem(new ShapeRenderSystem(camera), true);
 		textRenderSystem = world.setSystem(new TextRenderSystem(this.camera),
 				true);
+
+		 world.setSystem(new MovementSystem());
+		 world.setSystem(new BallTargetHideSystem());
+		 world.setSystem(new LevelOverSystem(this));
 
 		contactListenerManager.getListeners().add(bTCS);
 		contactListenerManager.getListeners().add(pIDS);

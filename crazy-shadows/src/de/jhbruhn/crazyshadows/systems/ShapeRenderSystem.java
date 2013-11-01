@@ -62,7 +62,7 @@ public class ShapeRenderSystem extends EntitySystem {
 			Position position = pm.getSafe(e);
 			Gdx.gl.glEnable(GL10.GL_BLEND);
 			Gdx.gl.glEnable(GL10.GL_LINE_SMOOTH);
-			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+//			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			if (cm.has(e)) {
 				Circle circle = cm.getSafe(e);
 
