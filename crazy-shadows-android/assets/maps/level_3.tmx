@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <layer name="Kachelebene 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <objectgroup name="walls" width="100" height="100">
+  <object x="981" y="107" width="232" height="511"/>
+  <object x="347" y="532" width="843" height="45"/>
+  <object x="323" y="127" width="83" height="416"/>
+  <object x="371" y="83" width="627" height="63"/>
+  <object x="757" y="135" width="57" height="304"/>
+  <object x="577" y="220" width="55" height="314"/>
+ </objectgroup>
+ <objectgroup name="player" width="100" height="100">
+  <object x="872" y="267" width="33" height="34"/>
+ </objectgroup>
+ <objectgroup name="balls" width="100" height="100">
+  <object name="1" x="467" y="467" width="52" height="52">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="targets" width="100" height="100">
+  <object name="1" x="857" y="157" width="65" height="66"/>
+ </objectgroup>
+</map>

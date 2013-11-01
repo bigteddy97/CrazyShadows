@@ -10,7 +10,7 @@ public class Main {
 		ImagePacker.run();
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Crazy Shadows";
-		cfg.useGL20 = true;
+		cfg.useGL20 = false;
 		cfg.samples = 16;
 		cfg.vSyncEnabled = true;
 

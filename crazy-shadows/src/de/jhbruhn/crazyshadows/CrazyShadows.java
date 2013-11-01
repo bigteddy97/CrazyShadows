@@ -12,7 +12,7 @@ public class CrazyShadows extends Game {
 	public static final String PREF_CURRENT_LEVEL = "currentLevel";
 	public static final float FRAME_WIDTH = 640;
 	public static final float FRAME_HEIGHT = 480;
-	public static final String[] LEVELS = { "level_1", "level_2" };
+	public static final String[] LEVELS = { "level_1", "level_2", "level_3" };
 
 	public RayHandler ray;
 	private boolean batchOn = false;

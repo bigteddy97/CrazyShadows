@@ -94,9 +94,9 @@ public class GameScreen implements Screen {
 		textRenderSystem = world.setSystem(new TextRenderSystem(this.camera),
 				true);
 
-		 world.setSystem(new MovementSystem());
-		 world.setSystem(new BallTargetHideSystem());
-		 world.setSystem(new LevelOverSystem(this));
+		world.setSystem(new MovementSystem());
+		world.setSystem(new BallTargetHideSystem());
+		world.setSystem(new LevelOverSystem(this));
 
 		contactListenerManager.getListeners().add(bTCS);
 		contactListenerManager.getListeners().add(pIDS);
@@ -199,9 +199,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT
-				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV
-						: 0));
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		if (!fadeInTimer.isDone()) {
 			float intVal = fadeInTimer.getPercentage();
@@ -210,7 +208,8 @@ public class GameScreen implements Screen {
 			ambientLightColor.set(GameScreen.MAX_LIGHT * intVal,
 					GameScreen.MAX_LIGHT * intVal, GameScreen.MAX_LIGHT
 							* intVal, 1);
-			game.ray.setAmbientLight(ambientLightColor);
+			if (game.ray != null)
+				game.ray.setAmbientLight(ambientLightColor);
 			fadeInTimer.update(delta);
 		}
 
@@ -239,9 +238,12 @@ public class GameScreen implements Screen {
 			accumulator -= BOX_STEP;
 		}
 
-		shapeRenderSystem.process();
-		spriteRenderSystem.process();
-		lightSystem.process();
+		if (shapeRenderSystem != null)
+			shapeRenderSystem.process();
+		if (spriteRenderSystem != null)
+			spriteRenderSystem.process();
+		if (lightSystem != null)
+			lightSystem.process();
 		textRenderSystem.process();
 
 		if (fadeInTimer.getPercentage() < 0.33f) {
