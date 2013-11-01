@@ -132,9 +132,13 @@ public class GameScreen implements Screen {
 				for (MapObject o : g.getObjects()) {
 					RectangleMapObject c = (RectangleMapObject) o;
 
-					EntityFactory.createPlayerEntity(world, physicsWorld,
-							c.getRectangle().x, c.getRectangle().y)
-							.addToWorld();
+					EntityFactory.createPlayerEntity(
+							world,
+							physicsWorld,
+							c.getRectangle().x + c.getRectangle().getWidth()
+									/ 2,
+							c.getRectangle().y + c.getRectangle().getHeight()
+									/ 2).addToWorld();
 				}
 			} else if (g.getName().equals("balls")) {
 				for (MapObject o : g.getObjects()) {
