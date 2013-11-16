@@ -12,8 +12,7 @@ public class Main {
 		cfg.title = "Crazy Shadows";
 		cfg.useGL20 = false;
 		cfg.samples = 4;
-		cfg.vSyncEnabled = true;
-		cfg.depth = 0;	
+//		cfg.foregroundFPS = 120;
 
 		new LwjglApplication(new CrazyShadows(), cfg);
 	}

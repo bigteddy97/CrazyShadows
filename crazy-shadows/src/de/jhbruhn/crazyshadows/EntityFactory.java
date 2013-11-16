@@ -101,7 +101,7 @@ public class EntityFactory {
 		e.addComponent(ball);
 
 		Circle c = new Circle();
-		c.color = color;
+		c.color = color.cpy();
 		c.filled = true;
 		c.radius = radius;
 		c.segments = 360 * 4;
@@ -127,7 +127,7 @@ public class EntityFactory {
 		e.addComponent(physicsBody);
 
 		Light light = new Light();
-		light.rays = 128;
+		light.rays = 256;
 		light.color = color.cpy();
 		light.distance = 64;
 		light.type = Light.LightType.POINT;

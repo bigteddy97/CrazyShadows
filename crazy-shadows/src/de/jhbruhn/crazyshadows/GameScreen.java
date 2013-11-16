@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 	static final float BOX_STEP = 1 / 120f;
 	static final int BOX_VELOCITY_ITERATIONS = 8;
 	static final int BOX_POSITION_ITERATIONS = 3;
-	static final float MAX_LIGHT = .4f;
+	static final float MAX_LIGHT = 0f;
 
 	private CrazyShadows game;
 	private World world;
@@ -60,13 +60,9 @@ public class GameScreen implements Screen {
 	private Timer fadeInTimer = new Timer(1);
 	private Timer fadeOutTimer = new Timer(1);
 
-	private Color ambientLightColor = new Color(0, 0, 0, 0);
-
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
 	public boolean levelOver = false;
-
-	private float curStand;
 
 	/*
 	 * private HealthRenderSystem healthRenderSystem; private HudRenderSystem
@@ -197,10 +193,10 @@ public class GameScreen implements Screen {
 			}
 		}
 
-//		for (float x = lowestX; x < highestX; x += 256)
-//			for (float y = lowestY; y < highestY; y += 256) {
-//				EntityFactory.createBackgroundEntity(world, x, y).addToWorld();
-//			}
+		for (float x = lowestX; x < highestX; x += 256)
+			for (float y = lowestY; y < highestY; y += 256) {
+				EntityFactory.createBackgroundEntity(world, x, y).addToWorld();
+			}
 
 		for (Entity e : ents)
 			e.addToWorld();
@@ -228,23 +224,13 @@ public class GameScreen implements Screen {
 			float intVal = fadeInTimer.getPercentage();
 			intVal = Interpolation.exp10In.apply(intVal);
 
-			ambientLightColor.set(GameScreen.MAX_LIGHT * intVal,
-					GameScreen.MAX_LIGHT * intVal, GameScreen.MAX_LIGHT
-							* intVal, 1);
-			if (game.ray != null)
-				game.ray.setAmbientLight(ambientLightColor);
 			fadeInTimer.update(delta);
 		}
 
 		if (!fadeOutTimer.isDone() && levelOver) {
 			float intVal = fadeOutTimer.getPercentage();
-			if (curStand == -1f) {
-				curStand = ambientLightColor.r;
-			}
+
 			intVal = 1 - Interpolation.exp10In.apply(intVal);
-			ambientLightColor.set(curStand * intVal, curStand * intVal,
-					curStand * intVal, 1);
-			game.ray.setAmbientLight(ambientLightColor);
 			fadeOutTimer.update(delta);
 		}
 
