@@ -51,7 +51,7 @@ public class EntityFactory {
 		Light light = new Light();
 		light.rays = 512 * 2;
 		light.color = Color.ORANGE.cpy();
-		light.distance = 256f * 2;
+		light.distance = 256;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
 
@@ -129,7 +129,7 @@ public class EntityFactory {
 		Light light = new Light();
 		light.rays = 256;
 		light.color = color.cpy();
-		light.distance = 64;
+		light.distance = 128;
 		light.type = Light.LightType.POINT;
 		e.addComponent(light);
 
@@ -243,20 +243,20 @@ public class EntityFactory {
 
 		return e;
 	}
-	
+
 	public static Entity createBackgroundEntity(World world, float x, float y) {
 		Entity e = world.createEntity();
-		
+
 		Position p = new Position();
 		p.x = x;
 		p.y = y;
 		e.addComponent(p);
-		
+
 		Sprite s = new Sprite();
 		s.name = "bg";
 		s.isBG = true;
 		e.addComponent(s);
-		
+
 		return e;
 	}
 }

@@ -49,7 +49,8 @@ public class LightSystem extends EntitySystem {
 		RayHandler.setGammaCorrection(true);
 		game.ray = new RayHandler(world);
 		game.ray.setCombinedMatrix(camera.combined);
-		game.ray.setBlurNum(3);
+		game.ray.setBlur(true);
+		game.ray.setAmbientLight(0, 0, 0, 1);
 	}
 
 	@Override
